@@ -696,7 +696,9 @@ class Dispatch:
 
             minutes = user.minutes_in_chat_online + user.minutes_in_chat_offline
            
-            if minutes == 0:
+            if username == 'imcleanbot':
+                bot.say('I\'m clean, don\'t shoot \\ TriHard /')
+            elif minutes == 0:
                 bot.say('{0} is not a Trump viewer SeemsGood'.format(user.username))
             elif minutes < 60:
                 bot.say('{0} has watched Trump for {1} minutes DansGame'.format(user.username, minutes))
