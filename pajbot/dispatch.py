@@ -693,13 +693,15 @@ class Dispatch:
             msg_args = message.split(' ')
             username = msg_args[0].lower()
             user = bot.users[username]
-            
-            if user.minutes_in_chat_online == 0:
-                bot.say('{0} is not a trump viewer SeemsGood'.format(user.username))
-            elif user.minutes_in_chat_online < 60:
-                bot.say('{0} has watched trump for {1} minutes DansGame'.format(user.username, user.minutes_in_chat_online))
+
+            minutes = user.minutes_in_chat_online + user.minutes_in_chat_offline
+           
+            if minutes == 0:
+                bot.say('{0} is not a Trump viewer SeemsGood'.format(user.username))
+            elif minutes < 60:
+                bot.say('{0} has watched Trump for {1} minutes DansGame'.format(user.username, minutes))
             else:
-                bot.say('{0} has watched trump for {1} hours {2} minutes DansGame'.format(user.username, user.minutes_in_chat_online // 60, user.minutes_in_chat_online % 60))
+                bot.say('{0} has watched Trump for {1} hours {2} minutes DansGame'.format(user.username, minutes // 60, minutes % 60))
 
 
     def permaban(bot, source, message, event, args):
