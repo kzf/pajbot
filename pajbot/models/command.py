@@ -480,9 +480,9 @@ class CommandManager(UserDict):
 
         self.internal_commands = {}
 
-        self.internal_commands['howcleanis'] = Command.dispatch_command('permaban',
+        self.internal_commands['howcleanis'] = Command.dispatch_command('howcleanis',
                 level=0,
-                description='',
+                description='Check if this guy is clean',
                 )
 
 
