@@ -378,7 +378,7 @@ class Bot:
         log.debug('end of stage 2 of update subs')
 
     def update_chatters_stage1(self):
-        chatters = self.twitchapi.get_chatters(self.streamer)
+        chatters = self.twitchapi.get_chatters('trumpsc')
         if len(chatters) > 0:
             self.mainthread_queue.add(self.update_chatters_stage2, args=[chatters])
 
