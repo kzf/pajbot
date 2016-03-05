@@ -697,13 +697,15 @@ class Dispatch:
             minutes = user.minutes_in_chat_online + user.minutes_in_chat_offline
            
             if username == 'imcleanbot':
-                bot.say('I\'m clean, don\'t shoot \\ TriHard /')
+                bot.say('I\'m clean, don\'t shoot \\ BabyRage /')
             elif minutes == 0:
                 bot.say('{0} is not a Trump viewer SeemsGood'.format(user.username))
             elif minutes < 60:
                 bot.say('{0} has watched Trump for {1} minutes DansGame'.format(user.username, minutes))
+            elif minutes < 120:
+                bot.say('{0} has watched Trump for 1 hour, {1} minutes DansGame'.format(user.username, minutes - 60))
             else:
-                bot.say('{0} has watched Trump for {1} hours {2} minutes DansGame'.format(user.username, minutes // 60, minutes % 60))
+                bot.say('{0} has watched Trump for {1} hours, {2} minutes DansGame'.format(user.username, minutes // 60, minutes % 60))
 
 
     def permaban(bot, source, message, event, args):
