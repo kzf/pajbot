@@ -59,7 +59,7 @@ class Bot:
 
     version = '2.6.2'
     date_fmt = '%H:%M'
-    update_chatters_interval = 4
+    update_chatters_interval = 1
     admin = None
     url_regex_str = r'\(?(?:(http|https):\/\/)?(?:((?:[^\W\s]|\.|-|[:]{1})+)@{1})?((?:www.)?(?:[^\W\s]|\.|-)+[\.][^\W\s]{2,4}|localhost(?=\/)|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(?::(\d*))?([\/]?[^\s\?]*[\/]{1})*(?:\/?([^\s\n\?\[\]\{\}\#]*(?:(?=\.)){1}|[^\s\n\?\[\]\{\}\.\#]*)?([\.]{1}[^\s\?\#]*)?)?(?:\?{1}([^\s\n\#\[\]]*))?([\#][^\s\n]*)?\)?'
 
@@ -80,13 +80,7 @@ class Bot:
     def load_default_phrases(self):
         default_phrases = {
                 'welcome': False,
-                'quit': False,
-                'nl': '{username} has typed {num_lines} messages in this channel!',
-                'nl_0': '{username} has not typed any messages in this channel BibleThump',
-                'nl_pos': '{username} is rank {nl_pos} line-farmer in this channel!',
-                'new_sub': 'Sub hype! {username} just subscribed PogChamp',
-                'resub': 'Resub hype! {username} just subscribed, {num_months} months in a row PogChamp <3 PogChamp',
-                'point_pos': '{username_w_verb} rank {point_pos} point-hoarder in this channel with {points} points.',
+                'quit': False
                 }
         if 'phrases' in self.config:
             self.phrases = {}
