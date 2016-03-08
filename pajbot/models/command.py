@@ -313,6 +313,7 @@ class Command(Base):
         return self.enabled == 1 and self.action is not None
 
     def run(self, bot, source, message, event={}, args={}, whisper=False):
+        args['whisper'] = whisper
         if self.action is None:
             log.warning('This command is not available.')
             return False
