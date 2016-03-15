@@ -716,6 +716,18 @@ class Dispatch:
                 replyfunc('{0} is not a Trump viewer SeemsGood'.format(user.username))
             else:
                 replyfunc('{0} has watched Trump for {1} DansGame'.format(user.username, timetotext(minutes)))
+                
+    def howcleanami(bot, source, message, event, args):
+        howcleanis(bot, source, '!howcleanis %s'%(source.username), event, args)
+        
+    def whoisdirty(bot, source, message, event, args):
+        if args['whisper']:
+            replyfunc = lambda x: bot.whisper(source.username, x)
+        else:
+            return
+            #replyfunc = bot.say
+          
+        replyfunc('Who is dirty')
 
     def permaban(bot, source, message, event, args):
         if message:
