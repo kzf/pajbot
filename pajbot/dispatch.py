@@ -695,11 +695,15 @@ class Dispatch:
             user.ignored = False
             message = message.lower()
             bot.whisper(source.username, 'No longer ignoring {0}'.format(user.username))
-
-    def howcleanis(bot, source, message, event, args):
+ 
+    @classmethod
+    def howcleanis_internal(self, bot, source, message, event, args):
         if message:
             msg_args = message.split(' ')
             username = msg_args[0].lower()
+            pattern = re.compile("^([A-Za-z0-9_]+)$")
+            if not pattern.match(username):
+              return
             user = bot.users[username]
 
             minutes = user.minutes_in_chat_online + user.minutes_in_chat_offline
@@ -712,13 +716,19 @@ class Dispatch:
               
             if username == 'imcleanbot':
                 replyfunc('I\'m clean, don\'t shoot \\ BabyRage /')
+            elif username == 'trumpsc':
+                replyfunc('What do you think BrokeBack')
             elif minutes == 0:
                 replyfunc('{0} is not a Trump viewer SeemsGood'.format(user.username))
             else:
                 replyfunc('{0} has watched Trump for {1} DansGame'.format(user.username, timetotext(minutes)))
+    
+    def howcleanis(bot, source, message, event, args):
+        Dispatch.howcleanis_internal(bot, source, message, event, args)
+        
                 
     def howcleanami(bot, source, message, event, args):
-        howcleanis(bot, source, '!howcleanis %s'%(source.username), event, args)
+        Dispatch.howcleanis_internal(bot, source, source.username, event, args)
         
     def whoisdirty(bot, source, message, event, args):
         if args['whisper']:
@@ -727,7 +737,9 @@ class Dispatch:
             return
             #replyfunc = bot.say
           
-        replyfunc('Who is dirty')
+        c = bot.users.db_session.query(User).order_by(desc(User.minutes_in_chat_offline))[:5]
+
+        replyfunc('Testing {0}'.format(c))
 
     def permaban(bot, source, message, event, args):
         if message:
