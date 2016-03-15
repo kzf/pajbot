@@ -18,6 +18,14 @@ from sqlalchemy import func
 
 log = logging.getLogger('pajbot')
 
+def timetotext(minutes):
+    if minutes < 60:
+        return ('{1} minutes'.format(minutes))
+    elif minutes < 120:
+        return ('1 hour, {1} minutes'.format(minutes - 60))
+    else:
+        return ('{1} hours, {2} minutes'.format(minutes // 60, minutes % 60))
+
 
 class Dispatch:
     """
@@ -707,13 +715,8 @@ class Dispatch:
                 replyfunc('I\'m clean, don\'t shoot \\ BabyRage /')
             elif minutes == 0:
                 replyfunc('{0} is not a Trump viewer SeemsGood'.format(user.username))
-            elif minutes < 60:
-                replyfunc('{0} has watched Trump for {1} minutes DansGame'.format(user.username, minutes))
-            elif minutes < 120:
-                replyfunc('{0} has watched Trump for 1 hour, {1} minutes DansGame'.format(user.username, minutes - 60))
             else:
-                replyfunc('{0} has watched Trump for {1} hours, {2} minutes DansGame'.format(user.username, minutes // 60, minutes % 60))
-
+                bot.say('{0} has watched Trump for {1} DansGame'.format(user.username, timetotext(minutes)))
 
     def permaban(bot, source, message, event, args):
         if message:
