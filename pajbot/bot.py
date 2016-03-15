@@ -384,10 +384,10 @@ class Bot:
         u_chatters = self.users.bulk_load(chatters)
 
         for user in u_chatters:
-            if self.is_online:
-                user.minutes_in_chat_online += self.update_chatters_interval
-            else:
-                user.minutes_in_chat_offline += self.update_chatters_interval
+            # if self.is_online:
+            #     user.minutes_in_chat_online += self.update_chatters_interval
+            # else:
+            user.minutes_in_chat_offline += self.update_chatters_interval
             num_points = points
             if user.subscriber:
                 num_points *= 5
