@@ -24,7 +24,7 @@ def timetotext(minutes):
     elif minutes < 120:
         return ('1 hour, {1} minutes'.format(minutes - 60))
     else:
-        return ('{1} hours, {2} minutes'.format(minutes // 60, minutes % 60))
+        return ('{0} hours, {1} minutes'.format(minutes // 60, minutes % 60))
 
 
 class Dispatch:
@@ -709,7 +709,6 @@ class Dispatch:
             else:
                 return
                 #replyfunc = bot.say
- 
               
             if username == 'imcleanbot':
                 replyfunc('I\'m clean, don\'t shoot \\ BabyRage /')
