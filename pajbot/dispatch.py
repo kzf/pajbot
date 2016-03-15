@@ -738,11 +738,17 @@ class Dispatch:
             #replyfunc = bot.say
         
         reply = 'Dirtiest Chatters: '
+        
+        current_time = datetime.datetime.utcnow()
+        thirty_minutes_ago = current_time - datetime.timedelta(minutes=30)
           
-        top_dirty = bot.users.db_session.query(User).filter(User.username!='pajlada').order_by(desc(User.minutes_in_chat_offline))[:5]
+        top_dirty = bot.users.db_session.query(User).filter(User.username!='pajlada').filter(User._last_active > thirty_minutes_ago).order_by(desc(User.minutes_in_chat_offline))[:5]
         
         for i, u in enumerate(top_dirty):
-            reply += "{0}. {1} ({2}) ".format(i, u.username, timetotext(u.minutes_in_chat_offline))
+            reply += "{0}. {1} ({2}) ".format(i+1, u.username, timetotext(u.minutes_in_chat_offline))
+
+        if top_dirty.length == 0:
+            reply = 'No active chatters are dirty SeemsGood'
 
         replyfunc(reply)
 
