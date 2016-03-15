@@ -736,10 +736,15 @@ class Dispatch:
         else:
             return
             #replyfunc = bot.say
+        
+        reply = 'Dirtiest Chatters: '
           
-        c = bot.users.db_session.query(User).order_by(desc(User.minutes_in_chat_offline))[:5]
+        top_dirty = bot.users.db_session.query(User).filter(User.username!='pajlada').order_by(desc(User.minutes_in_chat_offline))[:5]
+        
+        for i, u in enumerate(top_dirty):
+            reply += "{0}. {1} ({2}) ".format(i, u.username, timetotext(u.minutes_in_chat_offline))
 
-        replyfunc('Testing {0}'.format(c))
+        replyfunc(reply)
 
     def permaban(bot, source, message, event, args):
         if message:

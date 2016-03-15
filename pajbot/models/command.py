@@ -482,9 +482,9 @@ class CommandManager(UserDict):
         self.internal_commands = {}
 
         self.internal_commands['howcleanis'] = Command.dispatch_command('howcleanis',
-                level=0,
-                description='Check if this guy is clean',
-                )
+            level=0,
+            description='Check if this guy is clean',
+            )
         self.internal_commands['howcleanami'] = Command.dispatch_command('howcleanami',
             level=0,
             description='Check how clean you are',
