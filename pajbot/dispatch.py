@@ -20,9 +20,9 @@ log = logging.getLogger('pajbot')
 
 def timetotext(minutes):
     if minutes < 60:
-        return ('{1} minutes'.format(minutes))
+        return ('{0} minutes'.format(minutes))
     elif minutes < 120:
-        return ('1 hour, {1} minutes'.format(minutes - 60))
+        return ('1 hour, {0} minutes'.format(minutes - 60))
     else:
         return ('{0} hours, {1} minutes'.format(minutes // 60, minutes % 60))
 
@@ -711,13 +711,15 @@ class Dispatch:
             if args['whisper']:
                 replyfunc = lambda x: bot.whisper(source.username, x)
             else:
-                return
-                #replyfunc = bot.say
+                #return
+                replyfunc = bot.say
               
             if username == 'imcleanbot':
                 replyfunc('I\'m clean, don\'t shoot \\ BabyRage /')
             elif username == 'trumpsc':
                 replyfunc('What do you think BrokeBack')
+            elif 'trump_sub' in user.tags or username == 'eloise_ailv':
+                replyfunc('{0} is a Trump sub DansGame DansGame DansGame (watched {1})'.format(user.username, timetotext(minutes)))
             elif minutes == 0:
                 replyfunc('{0} is not a Trump viewer SeemsGood'.format(user.username))
             else:
@@ -740,14 +742,14 @@ class Dispatch:
         reply = 'Dirtiest Chatters: '
         
         current_time = datetime.datetime.utcnow()
-        thirty_minutes_ago = current_time - datetime.timedelta(minutes=30)
+        thirty_minutes_ago = current_time - datetime.timedelta(minutes=120)
           
-        top_dirty = bot.users.db_session.query(User).filter(User.username!='pajlada').filter(User._last_active > thirty_minutes_ago).order_by(desc(User.minutes_in_chat_offline))[:5]
+        top_dirty = bot.users.db_session.query(User).filter(User.minutes_in_chat_offline > 0).filter(User.username!='pajlada').filter(User._last_active > thirty_minutes_ago).order_by(desc(User.minutes_in_chat_offline))[:5]
         
         for i, u in enumerate(top_dirty):
             reply += "{0}. {1} ({2}) ".format(i+1, u.username, timetotext(u.minutes_in_chat_offline))
 
-        if top_dirty.length == 0:
+        if len(top_dirty) == 0:
             reply = 'No active chatters are dirty SeemsGood'
 
         replyfunc(reply)
