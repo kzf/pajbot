@@ -493,6 +493,10 @@ class CommandManager(UserDict):
             level=0,
             description='See which users are dirty',
             )
+        self.internal_commands['imcleanbot'] = Command.dispatch_command('imcleanbot',
+            level=0,
+            description='Helpful command',
+            )
 
 
         return self.internal_commands

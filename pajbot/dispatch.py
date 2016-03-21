@@ -720,10 +720,15 @@ class Dispatch:
                 replyfunc('What do you think BrokeBack')
             elif 'trump_sub' in user.tags or username == 'eloise_ailv':
                 replyfunc('{0} is a Trump sub DansGame DansGame DansGame (watched {1})'.format(user.username, timetotext(minutes)))
-            elif minutes == 0:
-                replyfunc('{0} is not a Trump viewer SeemsGood'.format(user.username))
-            else:
+            elif minutes > 0:
                 replyfunc('{0} has watched Trump for {1} DansGame'.format(user.username, timetotext(minutes)))
+            else:
+                age = bot.twitchapi.get_follow_relationship(username, 'trumpsc'):
+                if age is False:
+                    replyfunc('{0} is not a Trump viewer SeemsGood'.format(user.username))
+                else:
+                    replyfunc('{0} has been following Trump for {1} DansGame'.format(user.username, time_since(datetime.datetime.now().timestamp() - age.timestamp(), 0)))
+      
     
     def howcleanis(bot, source, message, event, args):
         Dispatch.howcleanis_internal(bot, source, message, event, args)
@@ -753,6 +758,14 @@ class Dispatch:
             reply = 'No active chatters are dirty SeemsGood'
 
         replyfunc(reply)
+        
+    def imcleanbot(bot, source, message, event, args):
+        if args['whisper']:
+            replyfunc = lambda x: bot.whisper(source.username, x)
+        else:
+            replyfunc = bot.say
+        
+        replyfunc("I've been monitoring Trump viewers since 2nd March, 2016. Historic Trump viewers may be mistakenly reported as clean DansGame")
 
     def permaban(bot, source, message, event, args):
         if message:
