@@ -706,7 +706,14 @@ class Dispatch:
               return
             user = bot.users[username]
 
+            if not hasattr(bot, 'lastHowClean'):
+                bot.lastHowClean = 0
+            if datetime.datetime.now().timestamp() - bot.lastHowClean < 4:
+                return
+            bot.lastHowClean = datetime.datetime.now().timestamp()
+
             minutes = user.minutes_in_chat_online + user.minutes_in_chat_offline
+            age = bot.twitchapi.get_follow_relationship(username, 'trumpsc')
            
             if args['whisper']:
                 replyfunc = lambda x: bot.whisper(source.username, x)
@@ -719,15 +726,13 @@ class Dispatch:
             elif username == 'trumpsc':
                 replyfunc('What do you think BrokeBack')
             elif 'trump_sub' in user.tags or username == 'eloise_ailv':
-                replyfunc('{0} is a Trump sub DansGame DansGame DansGame (watched {1})'.format(user.username, timetotext(minutes)))
+                replyfunc('{0} is a Trump sub DansGame DansGame DansGame'.format(user.username))
             elif minutes > 0:
-                replyfunc('{0} has watched Trump for {1} DansGame'.format(user.username, timetotext(minutes)))
+                replyfunc('{0} {1} has watched Trump for {2} DansGame'.format(user.username, ('' if age is False else 'follows Trump and '), timetotext(minutes)))
+            elif age is False:
+                replyfunc('{0} is clean SeemsGood'.format(user.username))
             else:
-                age = bot.twitchapi.get_follow_relationship(username, 'trumpsc'):
-                if age is False:
-                    replyfunc('{0} is not a Trump viewer SeemsGood'.format(user.username))
-                else:
-                    replyfunc('{0} has been following Trump for {1} DansGame'.format(user.username, time_since(datetime.datetime.now().timestamp() - age.timestamp(), 0)))
+                replyfunc('{0} has been following Trump for {1} DansGame'.format(user.username, time_since(datetime.datetime.now().timestamp() - age.timestamp(), 0)))
       
     
     def howcleanis(bot, source, message, event, args):
