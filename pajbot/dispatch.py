@@ -706,11 +706,12 @@ class Dispatch:
               return
             user = bot.users[username]
 
-            if not hasattr(bot, 'lastHowClean'):
-                bot.lastHowClean = 0
-            if datetime.datetime.now().timestamp() - bot.lastHowClean < 4:
-                return
-            bot.lastHowClean = datetime.datetime.now().timestamp()
+            if not args['whisper']:
+                if not hasattr(bot, 'lastHowClean'):
+                    bot.lastHowClean = 0
+                if datetime.datetime.now().timestamp() - bot.lastHowClean < 4:
+                    return
+                bot.lastHowClean = datetime.datetime.now().timestamp()
 
             minutes = user.minutes_in_chat_online + user.minutes_in_chat_offline
             age = bot.twitchapi.get_follow_relationship(username, 'trumpsc')
@@ -720,19 +721,36 @@ class Dispatch:
             else:
                 #return
                 replyfunc = bot.say
+                
+            emote = 'DansGame'
+            clean_emote = 'SeemsGood'
+            
+            if username == 'frodan':
+                emote = 'KappaPride'
+                clean_emote = 'KappaPride'
+            elif username == 'ek0p':
+                clean_emote = 'DansGame'
+            elif username == 'reynad27':
+                emote = 'EleGiggle'
+                clean_emote = 'EleGiggle'
+            elif username == 'nl_kripp':
+                emote = 'PJSalt'
+                clean_emote = 'PJSalt'
               
             if username == 'imcleanbot':
                 replyfunc('I\'m clean, don\'t shoot \\ BabyRage /')
             elif username == 'trumpsc':
                 replyfunc('What do you think BrokeBack')
+            elif username == 'pajlada':
+                replyfunc('pajlada \"idles\" in Trump chat 24/7 so that we can\'t know when he\'s actually watching DansGame')
             elif 'trump_sub' in user.tags or username == 'eloise_ailv':
                 replyfunc('{0} is a Trump sub DansGame DansGame DansGame'.format(user.username))
             elif minutes > 0:
-                replyfunc('{0} {1} has watched Trump for {2} DansGame'.format(user.username, ('' if age is False else 'follows Trump and '), timetotext(minutes)))
+                replyfunc('{0} {1} has watched Trump for {2} {3}'.format(user.username, ('' if age is False else 'follows Trump and '), timetotext(minutes), emote))
             elif age is False:
-                replyfunc('{0} is clean SeemsGood'.format(user.username))
+                replyfunc('{0} is clean {3}'.format(user.username, clean_emote))
             else:
-                replyfunc('{0} has been following Trump for {1} DansGame'.format(user.username, time_since(datetime.datetime.now().timestamp() - age.timestamp(), 0)))
+                replyfunc('{0} has been following Trump for {1} {3}}'.format(user.username, time_since(datetime.datetime.now().timestamp() - age.timestamp(), 0), emote))
       
     
     def howcleanis(bot, source, message, event, args):
@@ -771,6 +789,11 @@ class Dispatch:
             replyfunc = bot.say
         
         replyfunc("I've been monitoring Trump viewers since 2nd March, 2016. Historic Trump viewers may be mistakenly reported as clean DansGame")
+
+    def imcleanhelp(bot, source, message, event, args):
+       if args['whisper']:
+           bot.whisper(source.username, "Commands: !imcleanbot, !help (whisper only), !howcleanis USER, !howcleanami")
+
 
     def permaban(bot, source, message, event, args):
         if message:

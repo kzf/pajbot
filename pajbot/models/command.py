@@ -497,6 +497,10 @@ class CommandManager(UserDict):
             level=0,
             description='Helpful command',
             )
+        self.internal_commands['help'] = Command.dispatch_command('imcleanhelp',
+            level=0,
+            description='Help',
+            )
 
 
         return self.internal_commands
