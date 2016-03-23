@@ -786,7 +786,7 @@ class Dispatch:
           
         top_dirty = bot.users.db_session.query(User).filter(User.minutes_in_chat_offline > 0).filter(User.username!='pajlada').filter(User._last_active > thirty_minutes_ago).order_by(desc(User.minutes_in_chat_offline))[:5]
         
-        for i, u in enumerate(top_dirty):
+        for i, u in enumerate(bot.active_chatters):
             reply += "{0}. {1} ({2}) ".format(i+1, u.username, timetotext(u.minutes_in_chat_offline))
 
         if len(top_dirty) == 0:
