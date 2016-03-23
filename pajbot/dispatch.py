@@ -730,12 +730,24 @@ class Dispatch:
                 clean_emote = 'KappaPride'
             elif username == 'ek0p':
                 clean_emote = 'DansGame'
+            elif username == 'forsenlol':
+                clean_emote = 'gachiGASM'
             elif username == 'reynad27':
                 emote = 'EleGiggle'
                 clean_emote = 'EleGiggle'
             elif username == 'nl_kripp':
-                emote = 'PJSalt'
+                emote = 'PJSalt DansGame'
                 clean_emote = 'PJSalt'
+            elif username == 'thijshs':
+                emote = 'haHAA'
+                clean_emote = 'haHAA'
+            elif username == 'bobross':
+                clean_emote = 'KappaRoss'
+            elif username == 'legendarylea':
+                emote = '(puke)'
+            elif username == 'massansc' or username == 'p4wnyhof':
+                emote = 'MrDestructoid'
+                clean_emote = 'MrDestructoid'
               
             if username == 'imcleanbot':
                 replyfunc('I\'m clean, don\'t shoot \\ BabyRage /')
@@ -743,14 +755,14 @@ class Dispatch:
                 replyfunc('What do you think BrokeBack')
             elif username == 'pajlada':
                 replyfunc('pajlada \"idles\" in Trump chat 24/7 so that we can\'t know when he\'s actually watching DansGame')
-            elif 'trump_sub' in user.tags or username == 'eloise_ailv':
+            elif 'trump_sub' in user.tags or username == 'eloise_ailv' or username == 'limeyomnicron':
                 replyfunc('{0} is a Trump sub DansGame DansGame DansGame'.format(user.username))
             elif minutes > 0:
                 replyfunc('{0} {1} has watched Trump for {2} {3}'.format(user.username, ('' if age is False else 'follows Trump and '), timetotext(minutes), emote))
             elif age is False:
-                replyfunc('{0} is clean {3}'.format(user.username, clean_emote))
+                replyfunc('{0} is clean {1}'.format(user.username, clean_emote))
             else:
-                replyfunc('{0} has been following Trump for {1} {3}}'.format(user.username, time_since(datetime.datetime.now().timestamp() - age.timestamp(), 0), emote))
+                replyfunc('{0} has been following Trump for {1} {2}'.format(user.username, time_since(datetime.datetime.now().timestamp() - age.timestamp(), 0), emote))
       
     
     def howcleanis(bot, source, message, event, args):
