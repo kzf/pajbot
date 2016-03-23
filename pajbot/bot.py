@@ -62,6 +62,10 @@ class Bot:
     update_chatters_interval = 5
     admin = None
     url_regex_str = r'\(?(?:(http|https):\/\/)?(?:((?:[^\W\s]|\.|-|[:]{1})+)@{1})?((?:www.)?(?:[^\W\s]|\.|-)+[\.][^\W\s]{2,4}|localhost(?=\/)|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(?::(\d*))?([\/]?[^\s\?]*[\/]{1})*(?:\/?([^\s\n\?\[\]\{\}\#]*(?:(?=\.)){1}|[^\s\n\?\[\]\{\}\.\#]*)?([\.]{1}[^\s\?\#]*)?)?(?:\?{1}([^\s\n\#\[\]]*))?([\#][^\s\n]*)?\)?'
+    
+    max_active_chatters = 250
+    active_chatters = []
+    active_chatter_names = {}
 
     def parse_args():
         parser = argparse.ArgumentParser()
@@ -776,6 +780,16 @@ class Bot:
 
         source.last_seen = datetime.datetime.now()
         source.last_active = datetime.datetime.now()
+        
+        uname = source.username.lower()
+        if uname not in self.active_chatter_names:
+            if len(self.active_chatters) >= self.max_active_chatters:
+                oldest_user = self.active_chatters.pop()
+                oldest_name = oldest_user.username.lower()
+                if oldest_name in self.active_chatter_names:
+                    del self.active_chatter_names[oldest_name]
+            self.active_chatters.insert(0, source)
+            self.active_chatter_names[uname] = True
 
         if source.ignored:
             return False

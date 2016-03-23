@@ -736,7 +736,7 @@ class Dispatch:
                 emote = 'EleGiggle'
                 clean_emote = 'EleGiggle'
             elif username == 'nl_kripp':
-                emote = 'PJSalt DansGame'
+                emote = 'PJSalt'
                 clean_emote = 'PJSalt'
             elif username == 'thijshs':
                 emote = 'haHAA'
@@ -745,7 +745,7 @@ class Dispatch:
                 clean_emote = 'KappaRoss'
             elif username == 'legendarylea':
                 emote = '(puke)'
-            elif username == 'massansc' or username == 'p4wnyhof':
+            elif username == 'massansc' or username == 'p4wnyhof' or username == 'athenelive':
                 emote = 'MrDestructoid'
                 clean_emote = 'MrDestructoid'
               
